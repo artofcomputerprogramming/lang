@@ -1,0 +1,42 @@
+# Sample file
+
+%%Constants%%
+
+IF   = "if"
+THEN = "then"
+
+%%Definitions%%
+
+WS: [ \t\n\r]
+
+NUMBER: [0-9]+
+
+OPERATOR: [-+*/]
+
+STRING: ".+"
+
+COMMENT: #.+\n
+
+
+
+%%Rules%%
+
+WS: return WS
+
+NUMBER: self.install_num(); return NUMBER
+
+OPERATOR: return OPERATOR
+
+STRING: self.install_literal(); return STRING
+
+COMMENT: return COMMENT
+
+
+
+%%Code%%
+
+def install_num(self):
+    self.user_variables['number'] = int(self.yytoken())
+
+def install_literal(self):
+    self.user_variables['literal'] = self.yytoken()
